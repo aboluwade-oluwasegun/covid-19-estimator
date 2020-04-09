@@ -55,5 +55,6 @@ app.get('/api/v1/on-covid-19/logs', (req, res) => {
   res.status(200).sendFile(__dirname + '/request_logs.txt');
 });
 
+// connect to port
 const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
