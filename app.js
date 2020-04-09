@@ -27,7 +27,7 @@ let logger = (req, res, next) => {
     'ms';
   fs.appendFile('request_logs.txt', log + '\n', (err) => {
     if (err) {
-      console.log(err);
+      throw err;
     }
   });
   next();
