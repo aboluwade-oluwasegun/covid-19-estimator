@@ -55,13 +55,13 @@ const covid19ImpactEstimator = (req, res) => {
   );
 
   // estimated amount of money lost
-  output.impact.dollarsInFlight = (output.impact.infectionsByRequestedTime 
-    * req.body.region.avgDailyIncomePopulation 
-    * req.body.region.avgDailyIncomeInUSD 
+  output.impact.dollarsInFlight = (output.impact.infectionsByRequestedTime
+    * req.body.region.avgDailyIncomePopulation
+    * req.body.region.avgDailyIncomeInUSD
     * req.body.timeToElapse).toFixed(2) * 1;
-  output.severeImpact.dollarsInFlight = (output.severeImpact.infectionsByRequestedTime 
-    * req.body.region.avgDailyIncomePopulation 
-    * req.body.region.avgDailyIncomeInUSD 
+  output.severeImpact.dollarsInFlight = (output.severeImpact.infectionsByRequestedTime
+    * req.body.region.avgDailyIncomePopulation
+    * req.body.region.avgDailyIncomeInUSD
     * req.body.timeToElapse).toFixed(2) * 1;
 
   // xml or json?
