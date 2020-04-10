@@ -37,3 +37,13 @@ POST		/api/v1/on-covid-19/xml		200		0.0763ms
 POST		/api/v1/on-covid-19		200		0.0048ms
 POST		/api/v1/on-covid-19/logs		200		0.059301ms
 GET		/api/v1/on-covid-19/logs		200		0.005299ms
+GET		/api/v1/on-covid-19/logs		200		0.0423ms
+GET		/api/v1/on-covid-19/logs		200		0.0049ms
+GET		/api/v1/on-covid-19/logs		200		0.0039ms
+GET		/api/v1/on-covid-19/logs		200		0.0039ms
+POST		/api/v1/on-covid-19		200		0.0026ms
+POST		/api/v1/on-covid-19		200		0.002099ms
+POST		/api/v1/on-covid-19/json		200		0.001801ms
+POST		/api/v1/on-covid-19/xml		200		0.003301ms
+POST		/api/v1/on-covid-19/xml		200		0.0015ms
+GET		/api/v1/on-covid-19/logs		200		0.0028ms
