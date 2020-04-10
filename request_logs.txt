@@ -53,3 +53,4 @@ POST		/api/v1/on-covid-19/xml		200		0.0031ms
 POST		/api/v1/on-covid-19		200		0.054801ms
 POST		/api/v1/on-covid-19/xml		200		0.0743ms
 POST		/api/v1/on-covid-19		200		0.0081ms
+POST		/api/v1/on-covid-19		200		0.1287ms

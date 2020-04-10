@@ -10,7 +10,7 @@ const covid19ImpactEstimator = (data) => {
   }
 
   const output = {
-    data: data,
+    data,
     impact: {},
     severeImpact: {}
   };
@@ -22,10 +22,10 @@ const covid19ImpactEstimator = (data) => {
 
   // projected number of infected people
   output.impact.infectionsByRequestedTime = Math.trunc(
-    output.impact.currentlyInfected * Math.pow(2, days)
+    output.impact.currentlyInfected * (2 ** days)
   );
   output.severeImpact.infectionsByRequestedTime = Math.trunc(
-    output.severeImpact.currentlyInfected * Math.pow(2, days)
+    output.severeImpact.currentlyInfected * (2 ** days)
   );
 
   // CHALLENGE 2
@@ -64,15 +64,13 @@ const covid19ImpactEstimator = (data) => {
   );
 
   // estimated amount of money lost
-  output.impact.dollarsInFlight =
-    (
+  output.impact.dollarsInFlight = (
       output.impact.infectionsByRequestedTime
       * data.region.avgDailyIncomePopulation
       * data.region.avgDailyIncomeInUSD
       * data.timeToElapse
     ).toFixed(2) * 1;
-  output.severeImpact.dollarsInFlight =
-    (
+  output.severeImpact.dollarsInFlight = (
       output.severeImpact.infectionsByRequestedTime
       * data.region.avgDailyIncomePopulation
       * data.region.avgDailyIncomeInUSD
