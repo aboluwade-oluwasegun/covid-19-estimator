@@ -65,18 +65,18 @@ const covid19ImpactEstimator = (req, res) => {
   );
 
   // estimated amount of money lost
-  output.impact.dollarsInFlight = (
+  output.impact.dollarsInFlight = (Math.trunc((
     output.impact.infectionsByRequestedTime
-    * req.body.region.avgDailyIncomePopulation
-    * req.body.region.avgDailyIncomeInUSD
-    * req.body.timeToElapse
-  ).toFixed(2) * 1;
-  output.severeImpact.dollarsInFlight = (
+    * data.region.avgDailyIncomePopulation
+    * data.region.avgDailyIncomeInUSD)
+    / data.timeToElapse
+  ))
+  output.severeImpact.dollarsInFlight = (Math.trunc((
     output.severeImpact.infectionsByRequestedTime
-    * req.body.region.avgDailyIncomePopulation
-    * req.body.region.avgDailyIncomeInUSD
-    * req.body.timeToElapse
-  ).toFixed(2) * 1;
+    * data.region.avgDailyIncomePopulation
+    * data.region.avgDailyIncomeInUSD)
+    / data.timeToElapse
+  ))
 
   // xml or json?
   if (req.url === '/api/v1/on-covid-19/xml') {
