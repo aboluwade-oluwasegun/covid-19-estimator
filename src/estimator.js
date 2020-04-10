@@ -65,17 +65,17 @@ const covid19ImpactEstimator = (data) => {
 
   // estimated amount of money lost
   output.impact.dollarsInFlight = (
-      output.impact.infectionsByRequestedTime
-      * data.region.avgDailyIncomePopulation
-      * data.region.avgDailyIncomeInUSD
-      * data.timeToElapse
-    ).toFixed(2) * 1;
+    output.impact.infectionsByRequestedTime
+    * data.region.avgDailyIncomePopulation
+    * data.region.avgDailyIncomeInUSD
+    * data.timeToElapse
+  ).toFixed(2) * 1;
   output.severeImpact.dollarsInFlight = (
-      output.severeImpact.infectionsByRequestedTime
-      * data.region.avgDailyIncomePopulation
-      * data.region.avgDailyIncomeInUSD
-      * data.timeToElapse
-    ).toFixed(2) * 1;
+    output.severeImpact.infectionsByRequestedTime
+    * data.region.avgDailyIncomePopulation
+    * data.region.avgDailyIncomeInUSD
+    * data.timeToElapse
+  ).toFixed(2) * 1;
 
   return output;
 };
