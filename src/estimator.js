@@ -1,23 +1,31 @@
-const o2x = require('object-to-xml');
 
-const covid19ImpactEstimator = (req, res) => {
+const covid19ImpactEstimator = (data) => {
+  let days;
+  if (data.periodType === 'days') {
+    days = Math.trunc(data.timeToElapse / 3);
+  } else if (data.periodType === 'weeks') {
+    days = Math.trunc((data.timeToElapse * 7) / 3);
+  } else if (data.periodType === 'months') {
+    days = Math.trunc((data.timeToElapse * 30) / 3);
+  }
+
   const output = {
-    data: req.body,
+    data: data,
     impact: {},
     severeImpact: {}
   };
 
   // CHALLENGE 1
   // estimated number of currently infected people
-  output.impact.currentlyInfected = req.body.reportedCases * 10;
-  output.severeImpact.currentlyInfected = req.body.reportedCases * 50;
+  output.impact.currentlyInfected = data.reportedCases * 10;
+  output.severeImpact.currentlyInfected = data.reportedCases * 50;
 
   // projected number of infected people
   output.impact.infectionsByRequestedTime = Math.trunc(
-    output.impact.currentlyInfected * 512
+    output.impact.currentlyInfected * Math.pow(2, days)
   );
   output.severeImpact.infectionsByRequestedTime = Math.trunc(
-    output.severeImpact.currentlyInfected * 512
+    output.severeImpact.currentlyInfected * Math.pow(2, days)
   );
 
   // CHALLENGE 2
@@ -31,10 +39,11 @@ const covid19ImpactEstimator = (req, res) => {
 
   // estimated number of available hospital beds
   output.impact.hospitalBedsByRequestedTime = Math.trunc(
-    req.body.totalHospitalBeds - output.impact.severeCasesByRequestedTime
+    data.totalHospitalBeds * 0.35 - output.impact.severeCasesByRequestedTime
   );
   output.severeImpact.hospitalBedsByRequestedTime = Math.trunc(
-    req.body.totalHospitalBeds - output.severeImpact.severeCasesByRequestedTime
+    data.totalHospitalBeds * 0.35
+    - output.severeImpact.severeCasesByRequestedTime
   );
 
   // CHALLENGE 3
@@ -55,26 +64,23 @@ const covid19ImpactEstimator = (req, res) => {
   );
 
   // estimated amount of money lost
-  output.impact.dollarsInFlight = (output.impact.infectionsByRequestedTime
-    * req.body.region.avgDailyIncomePopulation
-    * req.body.region.avgDailyIncomeInUSD
-    * req.body.timeToElapse).toFixed(2) * 1;
-  output.severeImpact.dollarsInFlight = (output.severeImpact.infectionsByRequestedTime
-    * req.body.region.avgDailyIncomePopulation
-    * req.body.region.avgDailyIncomeInUSD
-    * req.body.timeToElapse).toFixed(2) * 1;
+  output.impact.dollarsInFlight =
+    (
+      output.impact.infectionsByRequestedTime
+      * data.region.avgDailyIncomePopulation
+      * data.region.avgDailyIncomeInUSD
+      * data.timeToElapse
+    ).toFixed(2) * 1;
+  output.severeImpact.dollarsInFlight =
+    (
+      output.severeImpact.infectionsByRequestedTime
+      * data.region.avgDailyIncomePopulation
+      * data.region.avgDailyIncomeInUSD
+      * data.timeToElapse
+    ).toFixed(2) * 1;
 
-  // xml or json?
-  if (req.url === '/api/v1/on-covid-19/xml') {
-    res.set('Content-Type', 'text/xml');
-    return res.send(
-      o2x({
-        '?xml version="1.0" encoding="utf-8"?': null,
-        output
-      })
-    );
-  }
-  return res.status(200).send(output);
+  return output;
 };
 
-module.exports = covid19ImpactEstimator;
+
+export default covid19ImpactEstimator;

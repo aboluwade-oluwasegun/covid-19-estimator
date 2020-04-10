@@ -2,7 +2,7 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-const covid19ImpactEstimator = require('./src/estimator');
+const covid19ImpactEstimator = require('./src/estimatorRest');
 
 app.use(express.json());
 
