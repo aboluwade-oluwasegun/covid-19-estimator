@@ -63,13 +63,22 @@ const covid19ImpactEstimator = (data) => {
     output.severeImpact.infectionsByRequestedTime * 0.02
   );
 
+  let lostDays;
+  if (data.periodType === 'days') {
+    lostDays = Math.trunc(data.timeToElapse);
+  } else if (data.periodType === 'weeks') {
+    lostDays = Math.trunc(data.timeToElapse * 7);
+  } else if (data.periodType === 'months') {
+    lostDays = Math.trunc(data.timeToElapse * 30);
+  }
+
   // estimated amount of money lost
   output.impact.dollarsInFlight = (
     Math.trunc(
       (output.impact.infectionsByRequestedTime
       * data.region.avgDailyIncomePopulation
       * data.region.avgDailyIncomeInUSD)
-      / data.timeToElapse
+      / lostDays
     )
   );
   output.severeImpact.dollarsInFlight = (
@@ -77,7 +86,7 @@ const covid19ImpactEstimator = (data) => {
       (output.severeImpact.infectionsByRequestedTime
       * data.region.avgDailyIncomePopulation
       * data.region.avgDailyIncomeInUSD)
-      / data.timeToElapse
+      / lostDays
     )
   );
 
