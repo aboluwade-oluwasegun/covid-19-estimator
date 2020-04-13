@@ -33,6 +33,7 @@ let logger = (req, res, next) => {
   next();
 };
 
+// use as middleware
 app.use(logger);
 
 // get json format
